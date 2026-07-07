@@ -1,28 +1,36 @@
+// ======================
 // Кнопка "Свободен"
+// ======================
 
 const statusBtn = document.querySelector(".status-btn");
 
-let isFree = true;
+if (statusBtn) {
 
-statusBtn.addEventListener("click", () => {
+    let isFree = true;
 
-    isFree = !isFree;
+    statusBtn.addEventListener("click", () => {
 
-    if (isFree) {
+        isFree = !isFree;
 
-        statusBtn.textContent = "Свободен";
-        statusBtn.style.background = "#19b65b";
+        if (isFree) {
 
-    } else {
+            statusBtn.textContent = "Свободен";
+            statusBtn.style.background = "#19b65b";
 
-        statusBtn.textContent = "Занят";
-        statusBtn.style.background = "#e74c3c";
+        } else {
 
-    }
+            statusBtn.textContent = "Занят";
+            statusBtn.style.background = "#e74c3c";
 
-});
+        }
 
-// Нажатие на заказ
+    });
+
+}
+
+// ======================
+// Карточки заказов
+// ======================
 
 const cards = document.querySelectorAll(".order-card");
 
@@ -36,10 +44,50 @@ cards.forEach(card => {
 
             card.style.transform = "";
 
-        }, 120);
+            // Переход на страницу заказа
 
-        // Здесь позже откроется страница заказа
+            window.location.href = "reception-order.html";
+
+        }, 120);
 
     });
 
 });
+
+// ======================
+// Кнопки страницы заказа
+// ======================
+
+const takeBtn = document.querySelector(".take-btn");
+const priceBtn = document.querySelector(".price-btn");
+const cancelBtn = document.querySelector(".cancel-btn");
+
+if (takeBtn) {
+
+    takeBtn.addEventListener("click", () => {
+
+        alert("Заказ принят");
+
+    });
+
+}
+
+if (priceBtn) {
+
+    priceBtn.addEventListener("click", () => {
+
+        alert("Новая цена");
+
+    });
+
+}
+
+if (cancelBtn) {
+
+    cancelBtn.addEventListener("click", () => {
+
+        history.back();
+
+    });
+
+}

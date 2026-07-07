@@ -183,3 +183,197 @@ body{
     }
 
 }
+
+/* ===========================
+   Страница приема заказа
+=========================== */
+
+.order-page{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:15px;
+
+}
+
+.header-card{
+
+    background:#53bff5;
+
+    color:#fff;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+.status-new{
+
+    background:#19b65b;
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+.card{
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+}
+
+.title{
+
+    color:#777;
+
+    font-size:14px;
+
+    margin-bottom:8px;
+
+}
+
+.district{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#222;
+
+}
+
+.address{
+
+    margin-top:6px;
+
+    color:#666;
+
+    line-height:1.5;
+
+}
+
+.row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.row:last-child{
+
+    border-bottom:none;
+
+}
+
+.price-big{
+
+    color:#19b65b;
+
+    font-size:30px;
+
+}
+
+.map-btn{
+
+    display:block;
+
+    text-align:center;
+
+    background:#4285F4;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+.buttons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.take-btn,
+.price-btn,
+.cancel-btn{
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:18px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.take-btn{
+
+    background:#19b65b;
+
+    color:#fff;
+
+}
+
+.price-btn{
+
+    background:#f4b400;
+
+    color:#fff;
+
+}
+
+.cancel-btn{
+
+    background:#e74c3c;
+
+    color:#fff;
+
+}
