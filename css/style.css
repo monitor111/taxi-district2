@@ -1,0 +1,185 @@
+/* Сброс */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* Страница */
+
+body{
+
+    background:#f3f5f8;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    color:#222;
+
+}
+
+/* Верх */
+
+.top-bar{
+
+    position:sticky;
+
+    top:0;
+
+    background:#ffffff;
+
+    padding:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.top-bar h1{
+
+    font-size:22px;
+
+}
+
+.top-bar p{
+
+    margin-top:4px;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+/* Кнопка */
+
+.status-btn{
+
+    background:#19b65b;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px 18px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.status-btn:hover{
+
+    opacity:.9;
+
+}
+
+/* Список */
+
+.orders{
+
+    padding:15px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+/* Карточка */
+
+.order-card{
+
+    background:#53bff5;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+    transition:.2s;
+
+    cursor:pointer;
+
+}
+
+.order-card:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* Маршрут */
+
+.route{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    color:#ffffff;
+
+}
+
+/* Нижняя строка */
+
+.info{
+
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:15px;
+
+    color:#eef9ff;
+
+}
+
+.price{
+
+    font-size:24px;
+
+    color:#ffe66d;
+
+    font-weight:bold;
+
+}
+
+/* Компьютер */
+
+@media(min-width:700px){
+
+    .orders{
+
+        max-width:700px;
+
+        margin:auto;
+
+    }
+
+}
