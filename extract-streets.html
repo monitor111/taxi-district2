@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Создание streets.json</title>
+</head>
+
+<body>
+
+<h2>Выберите export.geojson</h2>
+
+<input type="file" id="file">
+
+<script>
+
+const fileInput = document.getElementById("file");
+
+fileInput.addEventListener("change", (event) => {
+
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+
+        const data = JSON.parse(e.target.result);
+
+        const streets = [];
+
+data.features.forEach(feature => {
+
+    if(feature.properties.name){
+
+        streets.push(feature.properties.name);
+
+    }
+
+});
+
+const uniqueStreets = [...new Set(streets)];
+
+uniqueStreets.sort();
+
+console.log(uniqueStreets);
+
+const json = JSON.stringify(uniqueStreets, null, 2);
+
+const blob = new Blob([json], {type:"application/json"});
+
+const link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download = "streets.json";
+
+link.click();
+
+    };
+
+    reader.readAsText(file);
+
+});
+
+</script>
+
+</body>
+</html>

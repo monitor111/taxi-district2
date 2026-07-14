@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нове замовлення — Taxi District</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header class="top-bar">
+        <div>
+            <h1>Нове замовлення</h1>
+            <p>Введіть адресу поїздки</p>
+        </div>
+    </header>
+
+    <div class="client-form">
+
+        <!-- ПОЛЕ "ЗВІДКИ" -->
+        <div class="input-group">
+            <div class="route-icon from-icon"></div>
+            <div class="input-wrapper">
+                <label>Звідки</label>
+                <input type="text" id="from" placeholder="Введіть адресу">
+                <div id="from-list" class="suggestions"></div>
+            </div>
+        </div>
+        <div id="from-error" class="error-text"></div>
+
+        <!-- ПОЛЕ "КУДИ" -->
+        <div class="input-group">
+            <div class="route-icon to-icon"></div>
+            <div class="input-wrapper">
+                <label>Куди</label>
+                <input type="text" id="to" placeholder="Введіть адресу">
+                <div id="to-list" class="suggestions"></div>
+            </div>
+        </div>
+
+        <!-- КНОПКА РАСЧЕТА -->
+        <button id="calcBtn" class="calc-btn">
+            Розрахувати маршрут
+        </button>
+
+        <!-- БЛОК РЕЗУЛЬТАТА -->
+        <div id="routeInfo" class="route-info">
+            <div class="route-placeholder">
+                Вкажіть адреси, щоб дізнатися вартість поїздки
+            </div>
+        </div>
+
+        <!-- 3 КАРТОЧКИ ЦЕН (скрыты до расчета) -->
+        <div id="priceCards" class="price-cards hidden">
+            <div class="price-card" data-multiplier="0.9">
+                <div class="price-card-title">Економ</div>
+                <div class="price-card-value">—</div>
+                <div class="price-card-desc">Пошук 5–10 хв</div>
+            </div>
+            <div class="price-card active" data-multiplier="1.0">
+                <div class="price-card-title">Стандарт</div>
+                <div class="price-card-value">—</div>
+                <div class="price-card-desc">Пошук 2–5 хв</div>
+            </div>
+            <div class="price-card" data-multiplier="1.2">
+                <div class="price-card-title">Пріоритет</div>
+                <div class="price-card-value">—</div>
+                <div class="price-card-desc">Пошук до 2 хв</div>
+            </div>
+        </div>
+
+        <!-- КНОПКА ВЫЗОВА -->
+        <button id="callBtn" class="call-btn hidden">
+            Викликати таксі
+        </button>
+
+    </div>
+
+    <script src="../js/client.js"></script>
+</body>
+
+</html>
