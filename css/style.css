@@ -611,3 +611,246 @@ body {
         gap: 8px;
     }
 }
+
+/* ===========================
+Страница статуса заказа (Клиент)
+=========================== */
+
+.order-status-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 15px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Карточка статуса */
+.status-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #e5e8ec;
+}
+
+.status-card.searching {
+    border-color: #f4b400;
+    background: #fffdf5;
+}
+
+.pulse-dot {
+    width: 16px;
+    height: 16px;
+    background: #f4b400;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(244, 180, 0, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(244, 180, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(244, 180, 0, 0);
+    }
+}
+
+.status-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.status-subtext {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Карточка с информацией */
+.info-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid #e5e8ec;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row .label {
+    color: #777;
+}
+
+.info-row .value {
+    font-weight: 600;
+    color: #222;
+    text-align: right;
+}
+
+.price-row .value {
+    color: #19b65b;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* Карточка торга */
+.negotiation-card {
+    background: #fff8e1;
+    border: 2px solid #f4b400;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.nego-title {
+    font-weight: 800;
+    font-size: 16px;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.nego-text {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.nego-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-accept,
+.btn-decline {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-accept {
+    background: #19b65b;
+    color: #fff;
+}
+
+.btn-accept:hover {
+    background: #15a04f;
+}
+
+.btn-decline {
+    background: #fff;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+}
+
+.btn-decline:hover {
+    background: #ffebee;
+}
+
+/* Карточка водителя */
+.driver-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    border: 1px solid #e5e8ec;
+}
+
+.driver-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.driver-avatar {
+    width: 50px;
+    height: 50px;
+    background: #e5e8ec;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.driver-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #222;
+}
+
+.driver-car {
+    font-size: 14px;
+    color: #555;
+    margin-top: 2px;
+}
+
+.driver-plate {
+    font-size: 13px;
+    color: #888;
+    background: #f3f5f8;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-top: 4px;
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+.btn-call {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #19b65b;
+    color: #fff;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.btn-call:hover {
+    background: #15a04f;
+}
+
+/* Кнопка отмены */
+.btn-cancel-order {
+    width: 100%;
+    margin-top: 10px;
+    padding: 16px;
+    background: transparent;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-cancel-order:hover {
+    background: #ffebee;
+}
