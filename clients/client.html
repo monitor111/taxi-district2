@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Нове замовлення — Taxi District</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -19,66 +19,113 @@
 
     <div class="client-form">
 
-        <!-- ПОЛЕ "ЗВІДКИ" -->
-        <div class="input-group">
-            <div class="route-icon from-icon"></div>
+        <!-- ШАГ 1: Имя и телефон (виден только новым клиентам) -->
+        <div id="step1" class="step">
             <div class="input-wrapper">
-                <label>Звідки</label>
-                <input type="text" id="from" placeholder="Введіть адресу">
-                <div id="from-list" class="suggestions"></div>
+                <label>Ваше ім'я</label>
+                <input type="text" id="clientName" placeholder="Олександр" autocomplete="name">
             </div>
-        </div>
-        <div id="from-error" class="error-text"></div>
-
-        <!-- ПОЛЕ "КУДИ" -->
-        <div class="input-group">
-            <div class="route-icon to-icon"></div>
             <div class="input-wrapper">
-                <label>Куди</label>
-                <input type="text" id="to" placeholder="Введіть адресу">
-                <div id="to-list" class="suggestions"></div>
+                <label>Телефон</label>
+                <input type="tel" id="clientPhone" placeholder="+380 XX XXX XX XX" autocomplete="tel">
             </div>
+            <button id="nextBtn" class="calc-btn">Далі</button>
         </div>
 
-        <!-- КНОПКА РАСЧЕТА -->
-        <button id="calcBtn" class="calc-btn">
-            Розрахувати маршрут
-        </button>
+        <!-- ШАГ 2: Адреса (скрыт до ввода имени/телефона) -->
+        <div id="step2" class="step hidden">
 
-        <!-- БЛОК РЕЗУЛЬТАТА -->
-        <div id="routeInfo" class="route-info">
-            <div class="route-placeholder">
-                Вкажіть адреси, щоб дізнатися вартість поїздки
+            <!-- ПОЛЕ "ЗВІДКИ" (Объединенное) -->
+            <div class="input-group">
+                <div class="route-icon from-icon"></div>
+                <div class="input-wrapper">
+                    <label>Звідки</label>
+                    <input type="text" id="from" placeholder="Введіть адресу">
+                    
+                    <!-- Список подсказок (всегда поверх всего благодаря z-index в CSS) -->
+                    <div id="from-list" class="suggestions"></div>
+                    
+                    <!-- Компактный выбор района внутри того же блока -->
+                    <select id="fromSectorSelect" class="integrated-sector-select">
+                        <option value="">📍 Район відправлення (необов'язково)</option>
+                        <option value="Парус / Дієвка">Парус / Дієвка</option>
+                        <option value="Центр">Центр</option>
+                        <option value="Ігрень">Ігрень</option>
+                        <option value="Перемога 4-6">Перемога 4-6</option>
+                        <option value="Перемога 1-3">Перемога 1-3</option>
+                        <option value="Сокіл">Сокіл</option>
+                        <option value="Тополь">Тополь</option>
+                    </select>
+                </div>
             </div>
+            <div id="from-error" class="error-text"></div>
+
+
+            <!-- ПОЛЕ "КУДИ" (Объединенное) -->
+            <div class="input-group">
+                <div class="route-icon to-icon"></div>
+                <div class="input-wrapper">
+                    <label>Куди</label>
+                    <input type="text" id="to" placeholder="Введіть адресу">
+                    
+                    <!-- Список подсказок -->
+                    <div id="to-list" class="suggestions"></div>
+                    
+                    <!-- Компактный выбор района внутри того же блока -->
+                    <select id="toSectorSelect" class="integrated-sector-select">
+                        <option value="">📍 Район прибуття (необов'язково)</option>
+                        <option value="Парус / Дієвка">Парус / Дієвка</option>
+                        <option value="Центр">Центр</option>
+                        <option value="Ігрень">Ігрень</option>
+                        <option value="Перемога 4-6">Перемога 4-6</option>
+                        <option value="Перемога 1-3">Перемога 1-3</option>
+                        <option value="Сокіл">Сокіл</option>
+                        <option value="Тополь">Тополь</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <!-- КНОПКА РАСЧЕТА -->
+            <button id="calcBtn" class="calc-btn">
+                Розрахувати маршрут
+            </button>
+
+            <!-- БЛОК РЕЗУЛЬТАТА -->
+            <div id="routeInfo" class="route-info">
+                <div class="route-placeholder">
+                    Вкажіть адреси, щоб дізнатися вартість поїздки
+                </div>
+            </div>
+
+            <!-- 3 КАРТОЧКИ ЦЕН -->
+            <div id="priceCards" class="price-cards hidden">
+                <div class="price-card" data-multiplier="0.9">
+                    <div class="price-card-title">Економ</div>
+                    <div class="price-card-value">—</div>
+                    <div class="price-card-desc">Пошук 5–10 хв</div>
+                </div>
+                <div class="price-card active" data-multiplier="1.0">
+                    <div class="price-card-title">Стандарт</div>
+                    <div class="price-card-value">—</div>
+                    <div class="price-card-desc">Пошук 2–5 хв</div>
+                </div>
+                <div class="price-card" data-multiplier="1.2">
+                    <div class="price-card-title">Пріоритет</div>
+                    <div class="price-card-value">—</div>
+                    <div class="price-card-desc">Пошук до 2 хв</div>
+                </div>
+            </div>
+
+            <!-- КНОПКА ВЫЗОВА -->
+            <button id="callBtn" class="call-btn hidden">
+                Викликати таксі
+            </button>
+
         </div>
-
-        <!-- 3 КАРТОЧКИ ЦЕН (скрыты до расчета) -->
-        <div id="priceCards" class="price-cards hidden">
-            <div class="price-card" data-multiplier="0.9">
-                <div class="price-card-title">Економ</div>
-                <div class="price-card-value">—</div>
-                <div class="price-card-desc">Пошук 5–10 хв</div>
-            </div>
-            <div class="price-card active" data-multiplier="1.0">
-                <div class="price-card-title">Стандарт</div>
-                <div class="price-card-value">—</div>
-                <div class="price-card-desc">Пошук 2–5 хв</div>
-            </div>
-            <div class="price-card" data-multiplier="1.2">
-                <div class="price-card-title">Пріоритет</div>
-                <div class="price-card-value">—</div>
-                <div class="price-card-desc">Пошук до 2 хв</div>
-            </div>
-        </div>
-
-        <!-- КНОПКА ВЫЗОВА -->
-        <button id="callBtn" class="call-btn hidden">
-            Викликати таксі
-        </button>
 
     </div>
 
     <script src="../js/client.js"></script>
 </body>
-
 </html>
