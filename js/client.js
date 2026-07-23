@@ -366,7 +366,10 @@ document.getElementById("callBtn").addEventListener("click", async () => {
 
             alert(`Замовлення #${result.order_id} створено!\nМи зателефонуємо вам на ${clientPhone}.`);
 
-            // Переход на страницу статуса (позже добавим)
+             // === АВТОМАТИЧЕСКИЙ ПЕРЕХОД НА СТРАНИЦУ СТАТУСА ===
+            window.location.href = `order-status.html?id=${result.order_id}`;
+            // ==================================================
+             
             // window.location.href = "order-status.html";
         } else {
             alert("Помилка: " + (result.error || "Невідома помилка"));

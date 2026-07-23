@@ -930,3 +930,7 @@ body {
     border-color: #53bff5;
     background-color: #fff;
 }
+
+.hidden {
+ display: none !important; 
+}

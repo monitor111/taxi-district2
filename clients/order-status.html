@@ -13,72 +13,66 @@
     <header class="top-bar">
         <div>
             <h1>Статус замовлення</h1>
-            <p>Замовлення #1042!</p>
+            <p id="header-order-id">Замовлення #...</p>
         </div>
     </header>
 
     <div class="order-status-page">
 
-        <!-- БЛОК 1: СТАТУС (Всегда виден) -->
-        <div class="status-card searching">
+        <!-- БЛОК 1: СТАТУС -->
+        <div class="status-card searching" id="status-card">
             <div class="pulse-dot"></div>
-            <div class="status-text">Пошук водія...</div>
-            <div class="status-subtext">Ваше замовлення бачать водії району</div>
+            <div class="status-text" id="status-text">Пошук водія...</div>
+            <div class="status-subtext" id="status-subtext">Ваше замовлення бачать водії району</div>
         </div>
 
-        <!-- БЛОК 2: ДЕТАЛИ МАРШРУТА (Всегда виден) -->
+        <!-- БЛОК 2: ДЕТАЛИ МАРШРУТА -->
         <div class="info-card">
             <div class="info-row">
                 <span class="label">Звідки:</span>
-                <span class="value">вул. Максима Дія, 8</span>
+                <span class="value" id="route-from">...</span>
             </div>
             <div class="info-row">
                 <span class="label">Куди:</span>
-                <span class="value">пр. Олександра Поля, 5</span>
+                <span class="value" id="route-to">...</span>
             </div>
             <div class="info-row">
                 <span class="label">Відстань:</span>
-                <span class="value">11.3 км</span>
+                <span class="value" id="route-distance">... км</span>
             </div>
             <div class="info-row price-row">
                 <span class="label">Обрана ціна:</span>
-                <span class="value price-big">323 грн</span>
+                <span class="value price-big" id="route-price">... грн</span>
             </div>
         </div>
 
-        <!-- БЛОК 3: ТОРГ (Показывается JS, если водитель предлагает условия) -->
-        <!-- Для демонстрации я оставил его видимым, позже добавим класс "hidden" -->
-        <div class="negotiation-card">
+        <!-- БЛОК 3: ТОРГ (Скрыт по умолчанию) -->
+        <div class="negotiation-card hidden" id="negotiation-block">
             <div class="nego-title">💬 Пропозиція від водія</div>
             <div class="nego-text">
-                Водій пропонує підвищити ціну до <strong>350 грн</strong>, <br>
-                або ви можете взяти комісію сервісу на себе.
-            </div>
-            <div class="nego-buttons">
-                <button class="btn-accept">Погодитись</button>
-                <button class="btn-decline">Відхилити</button>
+                Водій пропонує умови. Будь ласка, перевірте повідомлення або зателефонуйте.
             </div>
         </div>
 
-        <!-- БЛОК 4: ВОДИТЕЛЬ НАЙДЕН (Показывается JS, когда заказ принят) -->
-        <!-- Для демонстрации оставил видимым -->
-        <div class="driver-card">
+        <!-- БЛОК 4: ВОДИТЕЛЬ НАЙДЕН (Скрыт по умолчанию) -->
+        <div class="driver-card hidden" id="driver-block">
             <div class="driver-header">
-                <div class="driver-avatar">👤</div> <!-- Позже здесь будет <img> -->
+                <div class="driver-avatar">🚖</div>
                 <div class="driver-info">
-                    <div class="driver-name">Олександр</div>
-                    <div class="driver-car">Toyota Camry, 2018 (Срібний)</div>
-                    <div class="driver-plate">АА 1234 ВВ</div>
+                    <div class="driver-name" id="driver-name">Водій прийняв замовлення</div>
+                    <div class="driver-car" id="driver-car">Дані авто завантажуються...</div>
                 </div>
             </div>
-            <a href="tel:+380991234567" class="btn-call">📞 Зателефонувати</a>
+            <a href="#" id="driver-phone-link" class="btn-call">📞 Зателефонувати водію</a>
         </div>
 
         <!-- КНОПКА ОТМЕНЫ -->
-        <button class="btn-cancel-order">Скасувати замовлення</button>
+        <button class="btn-cancel-order" id="btn-cancel">Скасувати замовлення</button>
 
     </div>
 
+    <!-- Подключаем новый скрипт -->
+    <script src="../js/status.js"></script>
 </body>
 
 </html>
