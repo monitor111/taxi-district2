@@ -45,16 +45,57 @@
                     <!-- Список подсказок (всегда поверх всего благодаря z-index в CSS) -->
                     <div id="from-list" class="suggestions"></div>
                     
-                    <!-- Компактный выбор района внутри того же блока -->
                     <select id="fromSectorSelect" class="integrated-sector-select">
-                        <option value="">📍 Район відправлення (необов'язково)</option>
-                        <option value="Парус / Дієвка">Парус / Дієвка</option>
-                        <option value="Центр">Центр</option>
-                        <option value="Ігрень">Ігрень</option>
-                        <option value="Перемога 4-6">Перемога 4-6</option>
-                        <option value="Перемога 1-3">Перемога 1-3</option>
-                        <option value="Сокіл">Сокіл</option>
-                        <option value="Тополь">Тополь</option>
+    <option value="">📍 Сектор відправлення (необов'язково)</option>
+    
+    <optgroup label="── Парус ──">
+        <option value="Парус / Червоний Камінь">Парус / Червоний Камінь</option>
+        <option value="Диївка">Диївка</option>
+        <option value="Сухачівка">Сухачівка</option>
+        <option value="Таромське">Таромське</option>
+        <option value="Західний">Західний</option>
+        <option value="Кайдаки / Проспект Свободи">Кайдаки / Проспект Свободи</option>
+    </optgroup>
+    
+    <optgroup label="── Центр ──">
+        <option value="Центр">Центр</option>
+        <option value="Вокзал">Вокзал</option>
+        <option value="Парк Глоби">Парк Глоби</option>
+        <option value="Нагірка">Нагірка</option>
+        <option value="Набережна">Набережна</option>
+    </optgroup>
+    
+    <optgroup label="── Стан ──">
+        <option value="Стан 550">Стан 550</option>
+        <option value="Нігояна">Нігояна</option>
+        <option value="Івана Мазепи (Петровського)">Івана Мазепи (Петровського)</option>
+        <option value="Проспект Металургів">Проспект Металургів</option>
+    </optgroup>
+    
+    <optgroup label="── Поля ──">
+        <option value="Робоча">Робоча</option>
+        <option value="Поля (Кірова)">Поля (Кірова)</option>
+        <option value="Проспект Б.Хмельницького">Проспект Б.Хмельницького</option>
+        <option value="Незалежності (Тітова)">Незалежності (Тітова)</option>
+    </optgroup>
+    
+    <optgroup label="── Квартал ──">
+        <option value="Квартал">Квартал</option>
+        <option value="Краснопілля">Краснопілля</option>
+        <option value="Мірний">Мірний</option>
+    </optgroup>
+    
+    <optgroup label="── Гагаріна ──">
+        <option value="Проспект Науки">Проспект Науки</option>
+        <option value="Юр. Академія">Юр. Академія</option>
+        <option value="Подстанція">Подстанція</option>
+        <option value="Тополь">Тополь</option>
+        <option value="Сокіл">Сокіл</option>
+        <option value="Перемога 4-6">Перемога 4-6</option>
+        <option value="Перемога 1-3">Перемога 1-3</option>
+    </optgroup>
+</select>
+
                     </select>
                 </div>
             </div>
@@ -73,14 +114,54 @@
                     
                     <!-- Компактный выбор района внутри того же блока -->
                     <select id="toSectorSelect" class="integrated-sector-select">
-                        <option value="">📍 Район прибуття (необов'язково)</option>
-                        <option value="Парус / Дієвка">Парус / Дієвка</option>
-                        <option value="Центр">Центр</option>
-                        <option value="Ігрень">Ігрень</option>
-                        <option value="Перемога 4-6">Перемога 4-6</option>
-                        <option value="Перемога 1-3">Перемога 1-3</option>
-                        <option value="Сокіл">Сокіл</option>
-                        <option value="Тополь">Тополь</option>
+                        <option value="">📍 Сектор прибудтя (необов'язково)</option>
+    
+    <optgroup label="── Парус ──">
+        <option value="Парус / Червоний Камінь">Парус / Червоний Камінь</option>
+        <option value="Диївка">Диївка</option>
+        <option value="Сухачівка">Сухачівка</option>
+        <option value="Таромське">Таромське</option>
+        <option value="Західний">Західний</option>
+        <option value="Кайдаки / Проспект Свободи">Кайдаки / Проспект Свободи</option>
+    </optgroup>
+    
+    <optgroup label="── Центр ──">
+        <option value="Центр">Центр</option>
+        <option value="Вокзал">Вокзал</option>
+        <option value="Парк Глоби">Парк Глоби</option>
+        <option value="Нагірка">Нагірка</option>
+        <option value="Набережна">Набережна</option>
+    </optgroup>
+    
+    <optgroup label="── Стан ──">
+        <option value="Стан 550">Стан 550</option>
+        <option value="Нігояна">Нігояна</option>
+        <option value="Івана Мазепи (Петровського)">Івана Мазепи (Петровського)</option>
+        <option value="Проспект Металургів">Проспект Металургів</option>
+    </optgroup>
+    
+    <optgroup label="── Поля ──">
+        <option value="Робоча">Робоча</option>
+        <option value="Поля (Кірова)">Поля (Кірова)</option>
+        <option value="Проспект Б.Хмельницького">Проспект Б.Хмельницького</option>
+        <option value="Незалежності (Тітова)">Незалежності (Тітова)</option>
+    </optgroup>
+    
+    <optgroup label="── Квартал ──">
+        <option value="Квартал">Квартал</option>
+        <option value="Краснопілля">Краснопілля</option>
+        <option value="Мірний">Мірний</option>
+    </optgroup>
+    
+    <optgroup label="── Гагаріна ──">
+        <option value="Проспект Науки">Проспект Науки</option>
+        <option value="Юр. Академія">Юр. Академія</option>
+        <option value="Подстанція">Подстанція</option>
+        <option value="Тополь">Тополь</option>
+        <option value="Сокіл">Сокіл</option>
+        <option value="Перемога 4-6">Перемога 4-6</option>
+        <option value="Перемога 1-3">Перемога 1-3</option>
+    </optgroup>
                     </select>
                 </div>
             </div>
