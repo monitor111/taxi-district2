@@ -1,0 +1,5 @@
+Разлогинится клиенту (вводим в консоль одной командой)
+localStorage.removeItem("taxi_client_phone"); localStorage.removeItem("taxi_current_order_id"); localStorage.removeItem("taxi_current_order_data"); location.reload();
+
+Разлогинится водителю
+localStorage.removeItem("driver_phone"); location.reload();

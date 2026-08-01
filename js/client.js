@@ -224,7 +224,7 @@ calcBtn.addEventListener("click", async () => {
     }
 
     if (!fromLat || !fromLon) {
-        fromError.textContent = "Не вдалося знайти адресу. Спробуйте: 'Поля 5'";
+        fromError.textContent = "Не вдалося знайти адресу.";
         routeInfo.textContent = "";
         return;
     }
@@ -388,3 +388,25 @@ document.getElementById("callBtn").addEventListener("click", async () => {
         }
     }
 });
+
+const welcomeTitle = document.getElementById("welcomeTitle");
+
+if (welcomeTitle) {
+
+    const phone = localStorage.getItem("taxi_client_phone");
+
+    if (phone) {
+
+        fetch("/api/get_client.php?phone=" + encodeURIComponent(phone))
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.name) {
+                    welcomeTitle.textContent = "Вітаємо, " + data.name + "!";
+                }
+
+            });
+
+    }
+
+}

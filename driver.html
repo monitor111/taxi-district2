@@ -27,173 +27,56 @@
 
     </header>
 
-    <main class="orders">
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Парус 1</strong>
-                <span>→</span>
-                <strong>ЦУМ</strong>
-            </div>
-
-            <div class="info">
-
-                <span>12:30</span>
-
-                <span class="price">300 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Коммунар</strong>
-                <span>→</span>
-                <strong>Вокзал</strong>
-            </div>
-
-            <div class="info">
-
-                <span>13:10</span>
-
-                <span class="price">260 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Красный Камень</strong>
-                <span>→</span>
-                <strong>Мост Сити</strong>
-            </div>
-
-            <div class="info">
-
-                <span>14:00</span>
-
-                <span class="price">340 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Парус 1</strong>
-                <span>→</span>
-                <strong>ЦУМ</strong>
-            </div>
-
-            <div class="info">
-
-                <span>12:30</span>
-
-                <span class="price">300 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Коммунар</strong>
-                <span>→</span>
-                <strong>Вокзал</strong>
-            </div>
-
-            <div class="info">
-
-                <span>13:10</span>
-
-                <span class="price">260 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Красный Камень</strong>
-                <span>→</span>
-                <strong>Мост Сити</strong>
-            </div>
-
-            <div class="info">
-
-                <span>14:00</span>
-
-                <span class="price">340 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Парус 1</strong>
-                <span>→</span>
-                <strong>ЦУМ</strong>
-            </div>
-
-            <div class="info">
-
-                <span>12:30</span>
-
-                <span class="price">300 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Коммунар</strong>
-                <span>→</span>
-                <strong>Вокзал</strong>
-            </div>
-
-            <div class="info">
-
-                <span>13:10</span>
-
-                <span class="price">260 грн</span>
-
-            </div>
-
-        </div>
-
-        <div class="order-card">
-
-            <div class="route">
-                <strong>Красный Камень</strong>
-                <span>→</span>
-                <strong>Мост Сити</strong>
-            </div>
-
-            <div class="info">
-
-                <span>14:00</span>
-
-                <span class="price">340 грн</span>
-
-            </div>
-
-        </div>
-
+        <main class="orders">
+        <!-- Сюда JavaScript будет добавлять реальные заказы -->
     </main>
 
-    <script src="js/script.js"></script>
+    <!-- Модальное окно регистрации (имя + телефон) -->
+    <div id="registrationModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Реєстрація водія</h2>
+            <p>Щоб приймати замовлення, вкажіть ваше ім'я та телефон</p>
+            
+            <div class="input-wrapper">
+                <label>Ваше ім'я</label>
+                <input type="text" id="driverName" placeholder="Олександр">
+            </div>
+            
+            <div class="input-wrapper">
+                <label>Телефон</label>
+                <input type="tel" id="driverPhone" placeholder="+380 XX XXX XX XX">
+            </div>
+            
+            <button id="saveDriverBtn" class="calc-btn">Зберегти</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации (машина) -->
+    <div id="carModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Дані авто</h2>
+            <p>Вкажіть дані вашого автомобіля</p>
+            
+            <div class="input-wrapper">
+                <label>Марка авто</label>
+                <input type="text" id="carMake" placeholder="Toyota Camry">
+            </div>
+            
+            <div class="input-wrapper">
+                <label>Номер авто</label>
+                <input type="text" id="carNumber" placeholder="АА 1234 ВВ">
+            </div>
+            
+            <div class="input-wrapper">
+                <label>Рік випуску</label>
+                <input type="text" id="carYear" placeholder="2018">
+            </div>
+            
+            <button id="saveCarBtn" class="calc-btn">Зберегти</button>
+        </div>
+    </div>
+
+       <script src="js/driver.js"></script>
 
 </body>
 
