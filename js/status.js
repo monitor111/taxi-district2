@@ -45,18 +45,43 @@ async function checkStatus() {
             negotiationBlock.classList.add("hidden");
             cancelBtn.classList.remove("hidden");
 
-        } else if (order.status === 'accepted') {
+                    } else if (order.status === 'accepted') {
             statusText.textContent = "Водій знайдений!";
             statusSubtext.textContent = "Водій вже прямує до вас";
-            statusCard.className = "status-card accepted"; // Можно добавить зеленый стиль в CSS
+            statusCard.className = "status-card accepted"; 
             
-            driverBlock.classList.remove("hidden"); // Показываем блок водителя
+            driverBlock.classList.remove("hidden"); 
             negotiationBlock.classList.add("hidden");
-            cancelBtn.classList.add("hidden"); // Отменить уже сложнее, скрываем кнопку (или меняем на "Связаться")
+            cancelBtn.classList.add("hidden"); 
 
-            // Здесь позже подставим реальные данные водителя из БД
-            document.getElementById("driver-name").textContent = "Водій прийняв замовлення";
-            document.getElementById("driver-car").textContent = "Деталі авто уточнюються...";
+            // === ПОДСТАВЛЯЕМ РЕАЛЬНЫЕ ДАННЫЕ ВОДИТЕЛЯ ===
+            
+            // Строка 1: Имя водителя
+            document.getElementById("driver-name").textContent = order.driver_name || "Водій";
+            
+            // Строки 2, 3 и 4: Авто, Год и Кликабельный телефон
+            const carMakeAndNumber = [order.car_make, order.car_number].filter(Boolean).join(", ");
+            const carYear = order.car_year || "";
+            const driverPhone = order.driver_phone || "";
+            
+            let carHTML = "";
+            
+            if (carMakeAndNumber) {
+                carHTML += `<div style="font-size:14px; color:#555; margin-bottom:4px;">🚗 ${carMakeAndNumber}</div>`;
+            }
+            if (carYear) {
+                carHTML += `<div style="font-size:13px; color:#888; margin-bottom:8px;">📅 ${carYear} р.</div>`;
+            }
+            if (driverPhone) {
+                // Телефон как 3-я строка, но кликабельная (откроет набор номера на мобильном)
+                carHTML += `<a href="tel:${driverPhone}" style="display:block; font-size:16px; color:#19b65b; font-weight:700; text-decoration:none;">📞 ${driverPhone}</a>`;
+            }
+            
+            if (carHTML) {
+                document.getElementById("driver-car").innerHTML = carHTML;
+            } else {
+                document.getElementById("driver-car").textContent = "Деталі авто уточнюються...";
+            }
 
         } else if (order.status === 'cancelled') {
             statusText.textContent = "Замовлення скасовано";
@@ -75,7 +100,6 @@ async function checkStatus() {
 // Обработка кнопки отмены (пока просто заглушка)
 document.getElementById("btn-cancel").addEventListener("click", async () => {
     if (confirm("Ви впевнені, що хочете скасувати замовлення?")) {
-        // Здесь позже будет fetch запрос к api/cancel_order.php
         alert("Функція скасування в розробці");
     }
 });

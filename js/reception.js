@@ -22,10 +22,14 @@ if (orderPage) {
                 takeBtn.disabled = true;
 
                 try {
+                    const driverPhone = localStorage.getItem("driver_phone") || "";
                     const response = await fetch("/api/accept_order.php", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ order_id: orderId })
+                        body: JSON.stringify({ 
+                            order_id: orderId,
+                            driver_phone: driverPhone
+                        })
                     });
 
                     const result = await response.json();

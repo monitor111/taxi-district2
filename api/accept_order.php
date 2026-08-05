@@ -31,10 +31,22 @@ if (!$order_id) {
 }
 
 try {
-    // Меняем статус заказа на 'accepted'
-    // (Позже сюда можно добавить привязку driver_id, если будет система авторизации водителей)
-    $stmt = $pdo->prepare("UPDATE orders SET status = 'accepted' WHERE id = ? AND status = 'searching'");
-    $stmt->execute([$order_id]);
+    $driver_phone = $data['driver_phone'] ?? '';
+    $driver_id = null;
+
+    // 1. Находим ID водителя по телефону
+    if ($driver_phone) {
+        $stmt = $pdo->prepare("SELECT id FROM drivers WHERE phone = ?");
+        $stmt->execute([$driver_phone]);
+        $driver = $stmt->fetch();
+        if ($driver) {
+            $driver_id = $driver['id'];
+        }
+    }
+
+    // 2. Обновляем статус и привязываем водителя к заказу
+    $stmt = $pdo->prepare("UPDATE orders SET status = 'accepted', driver_id = ? WHERE id = ? AND status = 'searching'");
+    $stmt->execute([$driver_id, $order_id]);
 
     if ($stmt->rowCount() > 0) {
         echo json_encode(["success" => true, "message" => "Заказ успешно принят"]);

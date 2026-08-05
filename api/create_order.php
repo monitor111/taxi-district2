@@ -41,6 +41,12 @@ $commission = $data['commission_payer'] ?? 'client';
 $from_sector = trim($data['from_sector'] ?? '');
 $to_sector = trim($data['to_sector'] ?? '');
 
+// Получаем координаты (если пустые — сохраняем NULL)
+$from_lat = !empty($data['from_lat']) ? floatval($data['from_lat']) : null;
+$from_lon = !empty($data['from_lon']) ? floatval($data['from_lon']) : null;
+$to_lat = !empty($data['to_lat']) ? floatval($data['to_lat']) : null;
+$to_lon = !empty($data['to_lon']) ? floatval($data['to_lon']) : null;
+
 try {
     // 1. Проверяем или создаем клиента
     $stmt = $pdo->prepare("SELECT id FROM clients WHERE phone = ?");
@@ -58,20 +64,24 @@ try {
 
     // 2. Создаем заказ (РОВНО 8 знаков вопроса и 8 переменных ниже)
     $stmt = $pdo->prepare("
-        INSERT INTO orders (client_id, from_address, to_address, from_sector, to_sector, distance_km, offered_price, commission_payer, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'searching')
-    ");
-    
-    $stmt->execute([
-        $client_id,    // 1
-        $from,         // 2
-        $to,           // 3
-        $from_sector,  // 4
-        $to_sector,    // 5
-        $distance,     // 6
-        $price,        // 7
-        $commission    // 8
-    ]);
+    INSERT INTO orders (client_id, from_address, from_lat, from_lon, to_address, to_lat, to_lon, from_sector, to_sector, distance_km, offered_price, commission_payer, status) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'searching')
+");
+
+$stmt->execute([
+    $client_id,    // 1
+    $from,         // 2
+    $from_lat,     // 3
+    $from_lon,     // 4
+    $to,           // 5
+    $to_lat,       // 6
+    $to_lon,       // 7
+    $from_sector,  // 8
+    $to_sector,    // 9
+    $distance,     // 10
+    $price,        // 11
+    $commission    // 12
+]);
     
     $order_id = $pdo->lastInsertId();
 

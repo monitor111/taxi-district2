@@ -1,0 +1,31 @@
+Файл
+Назначение
+Кто использует
+create_order.php
+Создаёт новый заказ в БД
+Клиент (client.js)
+get_client.php
+Получает имя клиента по телефону (для "Вітаємо, Олександр!")
+Клиент (client.js)
+get_order_status.php
+Получает данные одного заказа по ID
+Клиент (status.js) и Водитель (reception.js)
+get_orders.php
+Получает список всех свободных заказов
+Водитель (driver.js)
+register_driver.php
+Сохраняет/обновляет данные водителя
+Водитель (driver.js)
+accept_order.php
+Меняет статус заказа на accepted
+Водитель (reception.js)
+check_driver.php
+Проверяет статус регистрации водителя
+Водитель (driver.js)
+
+
+JS-файлы для справки:
+js/client.js — логика клиента (создание заказа, расчёт маршрута)
+js/status.js — страница статуса заказа клиента (order-status.html)
+js/driver.js — список заказов + регистрация водителя (driver.html)
+js/reception.js — страница деталей заказа водителя (reception-order.html)

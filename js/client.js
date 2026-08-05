@@ -331,9 +331,15 @@ document.getElementById("callBtn").addEventListener("click", async () => {
         to_sector: manualToSector || toSector, 
         distance: distance,
         price: selectedPrice,
-        commission_payer: "client"
+        commission_payer: "client",
+        // === ДОБАВЛЕНО: координаты для карт ===
+        from_lat: fromLat,
+        from_lon: fromLon,
+        to_lat: toLat,
+        to_lon: toLon
+        // ====================================
     };
-
+console.log(JSON.stringify(orderData));
     console.log("Отправляем заказ:", orderData);
 
     // Меняем текст кнопки на время отправки и блокируем её
