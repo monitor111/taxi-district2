@@ -25,11 +25,11 @@ try {
 try {
     // Получаем только активные заказы, которые ищут водителя
         $stmt = $pdo->query("
-        SELECT id, from_address, to_address, from_sector, to_sector, distance_km, offered_price, created_at 
-        FROM orders 
-        WHERE status = 'searching' 
-        ORDER BY created_at DESC
-    ");
+    SELECT id, from_address, from_lat, from_lon, to_address, to_lat, to_lon, from_sector, to_sector, distance_km, offered_price, created_at 
+    FROM orders 
+    WHERE status = 'searching' 
+    ORDER BY created_at DESC
+");
     
     $orders = $stmt->fetchAll();
 

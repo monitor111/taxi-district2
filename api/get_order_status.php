@@ -32,16 +32,17 @@ if (!$order_id) {
 try {
     // Получаем данные заказа, клиента и водителя (если он назначен)
     $stmt = $pdo->prepare("
-        SELECT 
-            o.id, o.status, o.from_address, o.to_address, o.from_sector, o.to_sector, 
-            o.distance_km, o.offered_price, o.commission_payer, o.driver_id,
-            c.name as client_name, c.phone as client_phone,
-            d.name as driver_name, d.phone as driver_phone, d.car_make, d.car_number, d.car_year
-        FROM orders o 
-        LEFT JOIN clients c ON o.client_id = c.id 
-        LEFT JOIN drivers d ON o.driver_id = d.id
-        WHERE o.id = ?
-    ");
+    SELECT 
+        o.id, o.status, o.from_address, o.from_lat, o.from_lon, o.to_address, o.to_lat, o.to_lon, 
+        o.from_sector, o.to_sector, 
+        o.distance_km, o.offered_price, o.commission_payer, o.driver_id,
+        c.name as client_name, c.phone as client_phone,
+        d.name as driver_name, d.phone as driver_phone, d.car_make, d.car_number, d.car_year
+    FROM orders o 
+    LEFT JOIN clients c ON o.client_id = c.id 
+    LEFT JOIN drivers d ON o.driver_id = d.id
+    WHERE o.id = ?
+");
     $stmt->execute([$order_id]);
     $order = $stmt->fetch();
 
@@ -58,7 +59,11 @@ try {
             "id" => $order['id'],
             "status" => $order['status'],
             "from_address" => $order['from_address'],
+            "from_lat" => $order['from_lat'],
+            "from_lon" => $order['from_lon'],
             "to_address" => $order['to_address'],
+            "to_lat" => $order['to_lat'],
+            "to_lon" => $order['to_lon'],
             "from_sector" => $order['from_sector'],
             "to_sector" => $order['to_sector'],
             "distance_km" => $order['distance_km'],

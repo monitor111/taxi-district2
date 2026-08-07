@@ -13,6 +13,16 @@ if (orderPage) {
     } else {
         loadOrderDetails(orderId);
 
+      // === Обработчики кликов на адреса для открытия карт ===
+        document.getElementById("from-address").addEventListener("click", () => {
+            openMapModal("pickup");
+        });
+        
+        document.getElementById("to-address").addEventListener("click", () => {
+            openMapModal("dropoff");
+        });
+        // =====================================================
+
         const takeBtn = document.getElementById("take-btn");
         if (takeBtn) {
             takeBtn.addEventListener("click", async () => {
@@ -51,8 +61,10 @@ if (orderPage) {
                         alert("Замовлення прийнято! Зателефонуйте клієнту для підтвердження.");
                     } else {
                         alert("Помилка: " + (result.error || "Не вдалося прийняти замовлення"));
-                        takeBtn.textContent = "Беру замовлення";
-                        takeBtn.disabled = false;
+                        // Редирект на список заказов через 1 секунду
+                        setTimeout(() => {
+                            window.location.href = "driver.html";
+                        }, 1000);
                     }
                 } catch (error) {
                     console.error("Помилка відправки:", error);
@@ -91,9 +103,84 @@ async function loadOrderDetails(orderId) {
         document.getElementById("commission-payer").textContent = order.commission_payer === 'client' ? 'Клієнт' : 'Водій';
         document.getElementById("order-distance").textContent = `${order.distance_km} км`;
 
-        document.getElementById("map-link").href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(order.to_address)}&origin=${encodeURIComponent(order.from_address)}`;
+// Если есть координаты — используем их, иначе fallback на текстовые адреса
+// if (order.from_lat && order.from_lon && order.to_lat && order.to_lon) {
+//     document.getElementById("map-link").href = `https://www.google.com/maps/dir/?api=1&destination=${order.to_lat},${order.to_lon}&origin=${order.from_lat},${order.from_lon}`;
+// } else {
+//     document.getElementById("map-link").href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(order.to_address)}&origin=${encodeURIComponent(order.from_address)}`;
+// }
 
     } catch (error) {
         console.error("Помилка завантаження деталей:", error);
     }
 }
+
+// === Логика модального окна выбора карт ===
+let selectedMapType = null; // "pickup" или "dropoff"
+
+function openMapModal(type) {
+    selectedMapType = type;
+    const modal = document.getElementById("map-modal");
+    modal.classList.remove("hidden");
+}
+
+// Закрытие модального окна
+document.getElementById("modal-close").addEventListener("click", () => {
+    document.getElementById("map-modal").classList.add("hidden");
+});
+
+// Закрытие при клике на затемнение (вне окна)
+document.getElementById("map-modal").addEventListener("click", (e) => {
+    if (e.target.id === "map-modal") {
+        document.getElementById("map-modal").classList.add("hidden");
+    }
+});
+// =====================================================
+
+// === Логика кнопок выбора карты ===
+document.getElementById("modal-waze").addEventListener("click", () => {
+    openMap("waze");
+});
+
+document.getElementById("modal-google").addEventListener("click", () => {
+    openMap("google");
+});
+
+function openMap(provider) {
+    const order = currentOrder;
+    
+    // Определяем координаты назначения
+    let destinationLat, destinationLon;
+    
+    if (selectedMapType === "pickup") {
+        // Клик на "Звідки" — едем к клиенту
+        destinationLat = order.from_lat;
+        destinationLon = order.from_lon;
+    } else {
+        // Клик на "Куди" — едем к точке назначения
+        destinationLat = order.to_lat;
+        destinationLon = order.to_lon;
+    }
+    
+    // Если координат нет — используем fallback на текстовые адреса
+    if (!destinationLat || !destinationLon) {
+        const destinationAddress = selectedMapType === "pickup" ? order.from_address : order.to_address;
+        
+        if (provider === "waze") {
+            window.open(`https://waze.com/ul?q=${encodeURIComponent(destinationAddress)}&navigate=yes`, "_blank");
+        } else {
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationAddress)}`, "_blank");
+        }
+    } else {
+        // Есть координаты — используем их
+        if (provider === "waze") {
+            window.open(`https://waze.com/ul?ll=${destinationLat},${destinationLon}&navigate=yes`, "_blank");
+        } else {
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${destinationLat},${destinationLon}`, "_blank");
+        }
+    }
+    
+    // Закрываем модальное окно
+    document.getElementById("map-modal").classList.add("hidden");
+}
+// =====================================================

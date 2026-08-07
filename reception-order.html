@@ -18,13 +18,13 @@
     <div class="card">
         <div class="title">Звідки</div>
         <div class="district" id="from-sector">...</div>
-        <div class="address" id="from-address">...</div>
+        <div class="address clickable-address" id="from-address" data-type="pickup">...</div>
     </div>
 
     <div class="card">
         <div class="title">Куди</div>
         <div class="district" id="to-sector">...</div>
-        <div class="address" id="to-address">...</div>
+        <div class="address clickable-address" id="to-address" data-type="dropoff">...</div>
     </div>
 
     <div class="card">
@@ -48,9 +48,9 @@
         </div>
     </div>
 
-    <a class="map-btn" id="map-link" href="#" target="_blank">
+    <!-- <a class="map-btn" id="map-link" href="#" target="_blank">
         🗺 Відкрити маршрут в Google Maps / Waze
-    </a>
+    </a> -->
 
     <!-- Блок кнопок для НОВОГО заказа -->
     <div class="buttons" id="decision-buttons">
@@ -69,6 +69,16 @@
         </button>
     </div>
 
+</div>
+
+<!-- Модальное окно выбора карт -->
+<div class="map-modal-overlay hidden" id="map-modal">
+    <div class="map-modal">
+        <div class="map-modal-title">Оберіть навігацію</div>
+        <button class="map-modal-btn" id="modal-waze">🟢 Waze</button>
+        <button class="map-modal-btn" id="modal-google">🔵 Google Maps</button>
+        <button class="map-modal-close" id="modal-close">Скасувати</button>
+    </div>
 </div>
 
    <script src="js/reception.js"></script>
