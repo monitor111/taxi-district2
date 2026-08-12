@@ -25,6 +25,7 @@ async function checkDriverStatus() {
             showCarModal();
         } else if (data.status === "full") {
             // Всё заполнено, можно грузить заказы
+            loadDriverName();
             loadOrders();
         }
     } catch (error) {
@@ -194,4 +195,23 @@ if (statusBtn) {
             statusBtn.style.background = "#e74c3c";
         }
     });
+}
+
+// ======================
+// 4. ЗАГРУЗКА ИМЕНИ ВОДИТЕЛЯ
+// ======================
+async function loadDriverName() {
+    if (!driverPhone) return;
+
+    try {
+        const response = await fetch(`/api/get_driver.php?phone=${encodeURIComponent(driverPhone)}`);
+        const data = await response.json();
+
+        const greetingEl = document.getElementById("driver-greeting");
+        if (greetingEl && data.name) {
+            greetingEl.textContent = `Вітаємо, ${data.name}!`;
+        }
+    } catch (error) {
+        console.error("Ошибка загрузки имени водителя:", error);
+    }
 }

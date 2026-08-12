@@ -97,9 +97,40 @@ async function checkStatus() {
     }
 }
 
-// Обработка кнопки отмены (пока просто заглушка)
+// Обработка кнопки отмены
 document.getElementById("btn-cancel").addEventListener("click", async () => {
-    if (confirm("Ви впевнені, що хочете скасувати замовлення?")) {
-        alert("Функція скасування в розробці");
+    if (!confirm("Ви впевнені, що хочете скасувати замовлення?")) return;
+
+    const btn = document.getElementById("btn-cancel");
+    btn.disabled = true;
+    btn.textContent = "Скасування...";
+
+    try {
+        const clientPhone = localStorage.getItem("taxi_client_phone") || "";
+        
+        const response = await fetch("/api/cancel_order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                order_id: orderId,
+                client_phone: clientPhone
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Замовлення скасовано!");
+            window.location.href = "client.html";
+        } else {
+            alert("Помилка: " + (result.error || "Не вдалося скасувати замовлення"));
+            btn.disabled = false;
+            btn.textContent = "Скасувати замовлення";
+        }
+    } catch (error) {
+        console.error("Помилка відправки:", error);
+        alert("Не вдалося зв'язатися з сервером");
+        btn.disabled = false;
+        btn.textContent = "Скасувати замовлення";
     }
 });
