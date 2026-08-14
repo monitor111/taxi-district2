@@ -10,11 +10,11 @@ $pdo = new PDO(
 
 $phone = $_GET['phone'] ?? '';
 
-$stmt = $pdo->prepare("SELECT name FROM clients WHERE phone = ?");
+$stmt = $pdo->prepare("SELECT name, phone FROM clients WHERE phone = ?");
 $stmt->execute([$phone]);
 
 $client = $stmt->fetch(PDO::FETCH_ASSOC);
 
-echo json_encode($client ?: ["name" => ""]);
+echo json_encode($client ?: ["name" => "", "phone" => ""]);
 
 ?>

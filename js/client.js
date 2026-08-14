@@ -395,7 +395,9 @@ console.log(JSON.stringify(orderData));
     }
 });
 
+// === Вывод имени в заголовке ===
 const welcomeTitle = document.getElementById("welcomeTitle");
+const numberTel = document.getElementById("numberTel");
 
 if (welcomeTitle) {
 
@@ -409,6 +411,7 @@ if (welcomeTitle) {
 
                 if (data.name) {
                     welcomeTitle.textContent = "Вітаємо, " + data.name + "!";
+                    numberTel.textContent = "Тел: " + data.phone;
                 }
 
             });

@@ -52,7 +52,7 @@ async function checkStatus() {
             
             driverBlock.classList.remove("hidden"); 
             negotiationBlock.classList.add("hidden");
-            cancelBtn.classList.add("hidden"); 
+            cancelBtn.classList.remove("hidden"); 
 
             // === ПОДСТАВЛЯЕМ РЕАЛЬНЫЕ ДАННЫЕ ВОДИТЕЛЯ ===
             

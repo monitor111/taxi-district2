@@ -67,20 +67,51 @@ try {
 //     exit;
 // }
 
-    if ($order['status'] !== 'searching') {
-        http_response_code(400);
-        echo json_encode(["error" => "Заказ уже принят водителем и не может быть отменён"]);
-        exit;
-    }
-
-    // Отменяем заказ
-    $stmt = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE id = ? AND status = 'searching'");
-    $stmt->execute([$order_id]);
-
-    if ($stmt->rowCount() > 0) {
+        // Проверяем, можно ли отменить заказ
+    if ($order['status'] === 'searching') {
+        // Заказ ещё не принят — отменяем свободно
+        $stmt = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE id = ? AND status = 'searching'");
+        $stmt->execute([$order_id]);
+        
         echo json_encode(["success" => true, "message" => "Заказ успешно отменён"]);
+        
+    } else if ($order['status'] === 'accepted') {
+        // Заказ принят водителем — проверяем время
+        $stmt = $pdo->prepare("SELECT accepted_at FROM orders WHERE id = ?");
+        $stmt->execute([$order_id]);
+        $order_data = $stmt->fetch();
+        
+        $accepted_at = strtotime($order_data['accepted_at']);
+        $now = time();
+        $minutes_passed = ($now - $accepted_at) / 60;
+        
+        // ====== ЭТО СТРОКА С ВРЕМЕНЕМ (для тестирования поменяйте 7 на 1) ======
+        if ($minutes_passed > 1) {
+            // Прошло больше 7 минут — увеличиваем счётчик поздних отказов
+            $stmt = $pdo->prepare("UPDATE clients SET late_cancel_count = late_cancel_count + 1 WHERE id = ?");
+            $stmt->execute([$order['client_id']]);
+            
+            // Отменяем заказ
+            $stmt = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE id = ? AND status = 'accepted'");
+            $stmt->execute([$order_id]);
+            
+            echo json_encode([
+                "success" => true, 
+                "message" => "Заказ отменён. У вас теперь " . ($minutes_passed > 7 ? "поздний отказ" : "")
+            ]);
+            
+        } else {
+            // Прошло меньше 7 минут — отменяем свободно
+            $stmt = $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE id = ? AND status = 'accepted'");
+            $stmt->execute([$order_id]);
+            
+            echo json_encode(["success" => true, "message" => "Заказ успешно отменён"]);
+        }
+        
     } else {
-        echo json_encode(["success" => false, "error" => "Не удалось отменить заказ"]);
+        http_response_code(400);
+        echo json_encode(["error" => "Заказ уже завершён или отменён"]);
+        exit;
     }
 
 } catch (\PDOException $e) {

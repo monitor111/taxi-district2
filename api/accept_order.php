@@ -45,7 +45,7 @@ try {
     }
 
     // 2. Обновляем статус и привязываем водителя к заказу
-    $stmt = $pdo->prepare("UPDATE orders SET status = 'accepted', driver_id = ? WHERE id = ? AND status = 'searching'");
+    $stmt = $pdo->prepare("UPDATE orders SET status = 'accepted', driver_id = ?, accepted_at = NOW() WHERE id = ? AND status = 'searching'");
     $stmt->execute([$driver_id, $order_id]);
 
     if ($stmt->rowCount() > 0) {

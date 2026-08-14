@@ -208,8 +208,10 @@ async function loadDriverName() {
         const data = await response.json();
 
         const greetingEl = document.getElementById("driver-greeting");
-        if (greetingEl && data.name) {
+        const telDriver = document.getElementById("telDriver");
+        if (greetingEl && telDriver && data.name && data.phone) {
             greetingEl.textContent = `Вітаємо, ${data.name}!`;
+            telDriver.textContent = `Тел: ${data.phone}`;
         }
     } catch (error) {
         console.error("Ошибка загрузки имени водителя:", error);

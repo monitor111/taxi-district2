@@ -103,6 +103,30 @@ async function loadOrderDetails(orderId) {
         document.getElementById("commission-payer").textContent = order.commission_payer === 'client' ? 'Клієнт' : 'Водій';
         document.getElementById("order-distance").textContent = `${order.distance_km} км`;
 
+                // === ПОКАЗ ПРЕДУПРЕЖДЕНИЯ О КЛИЕНТЕ ===
+        const lateCancelCount = order.late_cancel_count || 0;
+        
+        if (lateCancelCount >= 3) {
+            const warningCard = document.getElementById("warning-card");
+            const warningText = document.getElementById("warning-text");
+            const cancelCountEl = document.getElementById("cancel-count");
+            
+            warningCard.classList.remove("hidden");
+            cancelCountEl.textContent = lateCancelCount;
+            
+            if (lateCancelCount >= 5) {
+                // Красный для 5+
+                warningCard.style.background = "#f8d7da";
+                warningCard.style.borderLeft = "4px solid #dc3545";
+                warningText.style.color = "#721c24";
+            } else {
+                // Оранжевый для 3-4
+                warningCard.style.background = "#fff3cd";
+                warningCard.style.borderLeft = "4px solid #ff9800";
+                warningText.style.color = "#856404";
+            }
+        }
+
 // Если есть координаты — используем их, иначе fallback на текстовые адреса
 // if (order.from_lat && order.from_lon && order.to_lat && order.to_lon) {
 //     document.getElementById("map-link").href = `https://www.google.com/maps/dir/?api=1&destination=${order.to_lat},${order.to_lon}&origin=${order.from_lat},${order.from_lon}`;

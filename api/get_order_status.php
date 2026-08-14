@@ -32,17 +32,17 @@ if (!$order_id) {
 try {
     // Получаем данные заказа, клиента и водителя (если он назначен)
     $stmt = $pdo->prepare("
-    SELECT 
+        SELECT 
         o.id, o.status, o.from_address, o.from_lat, o.from_lon, o.to_address, o.to_lat, o.to_lon, 
         o.from_sector, o.to_sector, 
-        o.distance_km, o.offered_price, o.commission_payer, o.driver_id,
-        c.name as client_name, c.phone as client_phone,
+        o.distance_km, o.offered_price, o.commission_payer, o.driver_id, o.accepted_at,
+        c.name as client_name, c.phone as client_phone, c.late_cancel_count,
         d.name as driver_name, d.phone as driver_phone, d.car_make, d.car_number, d.car_year
-    FROM orders o 
-    LEFT JOIN clients c ON o.client_id = c.id 
-    LEFT JOIN drivers d ON o.driver_id = d.id
-    WHERE o.id = ?
-");
+        FROM orders o 
+        LEFT JOIN clients c ON o.client_id = c.id 
+        LEFT JOIN drivers d ON o.driver_id = d.id
+        WHERE o.id = ?
+        ");
     $stmt->execute([$order_id]);
     $order = $stmt->fetch();
 
@@ -69,7 +69,9 @@ try {
             "distance_km" => $order['distance_km'],
             "offered_price" => $order['offered_price'],
             "commission_payer" => $order['commission_payer'],
+            "accepted_at" => $order['accepted_at'],
             "client_phone" => $order['client_phone'],
+            "late_cancel_count" => (int)$order['late_cancel_count'],
             // Данные водителя (будут null, если статус еще 'searching')
             "driver_name" => $order['driver_name'],
             "driver_phone" => $order['driver_phone'],
