@@ -2,6 +2,7 @@
 // Логика для страницы деталей заказа (reception-order.html)
 // ======================
 let currentOrder = null;
+let statusInterval = null;
 const orderPage = document.querySelector(".order-page");
 
 if (orderPage) {
@@ -12,6 +13,7 @@ if (orderPage) {
         document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка: ID замовлення не вказано</h2>";
     } else {
         loadOrderDetails(orderId);
+        statusInterval = setInterval(() => checkOrderStatus(orderId), 3000);
 
       // === Обработчики кликов на адреса для открытия карт ===
         document.getElementById("from-address").addEventListener("click", () => {
@@ -74,6 +76,47 @@ if (orderPage) {
                 }
             });
         }
+
+        // === ВОТ СЮДА ВСТАВЛЯЕТЕ ===
+        const driverCancelBtn = document.getElementById("driver-cancel-btn");
+        if (driverCancelBtn) {
+            driverCancelBtn.addEventListener("click", async () => {
+                if (!confirm("Ви впевнені, що хочете відмовитися від замовлення? Замовлення повернеться в список вільних.")) return;
+
+                driverCancelBtn.disabled = true;
+                driverCancelBtn.textContent = "Обробка...";
+
+                try {
+                    const driverPhone = localStorage.getItem("driver_phone") || "";
+                    
+                    const response = await fetch("/api/driver_cancel_order.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            order_id: orderId,
+                            driver_phone: driverPhone
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert("Замовлення повернуто в список вільних");
+                        window.location.href = "driver.html";
+                    } else {
+                        alert("Помилка: " + (result.error || "Не вдалося відмовитися"));
+                        driverCancelBtn.disabled = false;
+                        driverCancelBtn.textContent = "❌ Відмова від замовлення";
+                    }
+                } catch (error) {
+                    console.error("Помилка відправки:", error);
+                    alert("Не вдалося зв'язатися з сервером");
+                    driverCancelBtn.disabled = false;
+                    driverCancelBtn.textContent = "❌ Відмова від замовлення";
+                }
+            });
+        }
+
     }
 }
 
@@ -126,13 +169,6 @@ async function loadOrderDetails(orderId) {
                 warningText.style.color = "#856404";
             }
         }
-
-// Если есть координаты — используем их, иначе fallback на текстовые адреса
-// if (order.from_lat && order.from_lon && order.to_lat && order.to_lon) {
-//     document.getElementById("map-link").href = `https://www.google.com/maps/dir/?api=1&destination=${order.to_lat},${order.to_lon}&origin=${order.from_lat},${order.from_lon}`;
-// } else {
-//     document.getElementById("map-link").href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(order.to_address)}&origin=${encodeURIComponent(order.from_address)}`;
-// }
 
     } catch (error) {
         console.error("Помилка завантаження деталей:", error);
@@ -206,5 +242,36 @@ function openMap(provider) {
     
     // Закрываем модальное окно
     document.getElementById("map-modal").classList.add("hidden");
+}
+
+// === ОПРОС СТАТУСА ЗАКАЗА (для редиректа при отмене клиентом) ===
+async function checkOrderStatus(orderId) {
+    try {
+        const response = await fetch(`/api/get_order_status.php?id=${orderId}`);
+        const data = await response.json();
+
+        if (!data.success || !data.order) return;
+
+        const order = data.order;
+
+        // Если клиент отменил заказ
+        if (order.status === 'cancelled') {
+    // Останавливаем опрос, чтобы alert не показывался повторно
+    clearInterval(statusInterval);
+    
+    const statusEl = document.getElementById("order-status");
+    statusEl.textContent = "❌ Клієнт скасував замовлення";
+    statusEl.style.background = "#e74c3c";
+    statusEl.style.color = "#fff";
+
+    alert("Клієнт скасував замовлення");
+    
+    setTimeout(() => {
+        window.location.href = "driver.html";
+    }, 1000);
+}
+    } catch (error) {
+        console.error("Помилка перевірки статусу:", error);
+    }
 }
 // =====================================================

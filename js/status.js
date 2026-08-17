@@ -108,7 +108,7 @@ document.getElementById("btn-cancel").addEventListener("click", async () => {
     try {
         const clientPhone = localStorage.getItem("taxi_client_phone") || "";
         
-        const response = await fetch("/api/cancel_order.php", {
+        const response = await fetch("/api/client_cancel_order.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
