@@ -77,6 +77,65 @@ if (orderPage) {
             });
         }
 
+                // === КНОПКА "НОВА ЦІНА" (показать/скрыть список) ===
+        const togglePriceBtn = document.getElementById("toggle-price-btn");
+        const priceOfferBlock = document.getElementById("price-offer-block");
+        if (togglePriceBtn && priceOfferBlock) {
+            togglePriceBtn.addEventListener("click", () => {
+                priceOfferBlock.classList.toggle("hidden");
+            });
+        }
+
+                // === ОТПРАВКА ПРЕДЛОЖЕНИЯ ЦЕНЫ ===
+        const sendOfferBtn = document.getElementById("send-offer-btn");
+        const offerAmountSelect = document.getElementById("offer-amount");
+        if (sendOfferBtn && offerAmountSelect) {
+            sendOfferBtn.addEventListener("click", async () => {
+                const offerAmount = offerAmountSelect.value;
+                
+                if (!offerAmount) {
+                    alert("Оберіть суму пропозиції");
+                    return;
+                }
+
+                if (!confirm(`Ви впевнені, що хочете запропонувати клієнту підняти ціну на ${offerAmount} грн?`)) return;
+
+                sendOfferBtn.disabled = true;
+                sendOfferBtn.textContent = "Відправка...";
+
+                try {
+                    const driverPhone = localStorage.getItem("driver_phone") || "";
+                    
+                    const response = await fetch("/api/send_price_offer.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            order_id: orderId,
+                            driver_phone: driverPhone,
+                            offer_amount: parseInt(offerAmount)
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert("Пропозиція відправлена клієнту!");
+                        // Скрываем блок предложения
+                        priceOfferBlock.classList.add("hidden");
+                        offerAmountSelect.value = "";
+                    } else {
+                        alert("Помилка: " + (result.error || "Не вдалося відправити пропозицію"));
+                    }
+                } catch (error) {
+                    console.error("Помилка відправки:", error);
+                    alert("Не вдалося зв'язатися з сервером");
+                } finally {
+                    sendOfferBtn.disabled = false;
+                    sendOfferBtn.textContent = "Відправити пропозицію";
+                }
+            });
+        }
+
         // === ВОТ СЮДА ВСТАВЛЯЕТЕ ===
         const driverCancelBtn = document.getElementById("driver-cancel-btn");
         if (driverCancelBtn) {

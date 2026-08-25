@@ -59,8 +59,22 @@
     <!-- Блок кнопок для НОВОГО заказа -->
     <div class="buttons" id="decision-buttons">
         <button class="take-btn" id="take-btn">Беру замовлення</button>
-        <button class="price-btn">Нова ціна</button>
+        <button class="price-btn" id="toggle-price-btn">Нова ціна</button>
         <!-- <button class="cancel-btn">Відмова</button> -->
+    </div>
+
+        <!-- Блок предложения цены (скрыт по умолчанию) -->
+    <div class="buttons hidden" id="price-offer-block">
+        <select id="offer-amount" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; flex: 1;">
+            <option value="">Оберіть суму</option>
+            <option value="20">+20 грн</option>
+            <option value="50">+50 грн</option>
+            <option value="80">+80 грн</option>
+            <option value="100">+100 грн</option>
+        </select>
+        <button class="price-btn" id="send-offer-btn" style="background: #ff9800; color: white;">
+            Відправити пропозицію
+        </button>
     </div>
 
     <!-- Блок кнопок для ПРИНЯТОГО заказа (скрыт по умолчанию) -->

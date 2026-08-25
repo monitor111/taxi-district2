@@ -10,7 +10,9 @@ if (!orderId) {
     
     // Запускаем опрос сервера сразу и затем каждые 4 секунды
     checkStatus();
+    checkPriceOffers();
     setInterval(checkStatus, 4000);
+    setInterval(checkPriceOffers, 4000);
 }
 
 async function checkStatus() {
@@ -42,7 +44,7 @@ async function checkStatus() {
             statusCard.className = "status-card searching";
             
             driverBlock.classList.add("hidden");
-            negotiationBlock.classList.add("hidden");
+            // negotiationBlock.classList.add("hidden");
             cancelBtn.classList.remove("hidden");
 
                     } else if (order.status === 'accepted') {
@@ -134,3 +136,109 @@ document.getElementById("btn-cancel").addEventListener("click", async () => {
         btn.textContent = "Скасувати замовлення";
     }
 });
+
+// === ОПРОС ПРЕДЛОЖЕНИЙ ЦЕНЫ ===
+let lastRejectedOfferTime = null; // время последнего отказа (для тишины 5 минут)
+let currentOfferId = null; // ID текущего показываемого предложения
+
+async function checkPriceOffers() {
+    try {
+        const response = await fetch(`/api/get_price_offers.php?id=${orderId}`);
+        const data = await response.json();
+
+        if (!data.success) return;
+
+        const offers = data.offers;
+        const negotiationBlock = document.getElementById("negotiation-block");
+
+        // Если нет предложений — скрываем блок
+        if (offers.length === 0) {
+            negotiationBlock.classList.add("hidden");
+            currentOfferId = null;
+            return;
+        }
+
+        // Берём только первое (самое раннее) предложение
+        const firstOffer = offers[0];
+
+        // Проверяем тишину 5 минут после отказа
+        if (lastRejectedOfferTime) {
+            const minutesPassed = (Date.now() - lastRejectedOfferTime) / 1000 / 60;
+            if (minutesPassed < 5) {
+                negotiationBlock.classList.add("hidden");
+                return;
+            } else {
+                // 5 минут прошло — сбрасываем
+                lastRejectedOfferTime = null;
+            }
+        }
+
+        // Если это то же предложение, что уже показано — не обновляем
+        if (currentOfferId === firstOffer.id) return;
+
+        // Показываем блок
+        negotiationBlock.classList.remove("hidden");
+        currentOfferId = firstOffer.id;
+
+        // Заголовок
+        document.getElementById("nego-title").textContent = "💬 Підняття ціни";
+
+        // Блок с предложением водителя
+        const driverOfferBlock = document.getElementById("nego-driver-offer");
+        const driverAmountEl = document.getElementById("nego-driver-amount");
+        const refuseBtn = document.getElementById("nego-refuse-btn");
+
+        driverOfferBlock.classList.remove("hidden");
+        refuseBtn.classList.remove("hidden");
+        driverAmountEl.textContent = firstOffer.offer_amount;
+
+        // Предзаполняем поле ввода
+        document.getElementById("nego-amount-input").value = firstOffer.offer_amount;
+
+    } catch (error) {
+        console.error("Помилка отримання пропозицій:", error);
+    }
+
+            // === ОБРАБОТЧИКИ КНОПОК ТОРГА (привязываем каждый раз, т.к. offer_id меняется) ===
+const refuseBtn = document.getElementById("nego-refuse-btn");
+
+refuseBtn.onclick = async () => {
+    if (!confirm("Відмовити водію? Нові пропозиції не з'являтимуться 5 хвилин.")) return;
+
+    refuseBtn.disabled = true;
+    refuseBtn.textContent = "Обробка...";
+
+    try {
+        const response = await fetch("/api/reject_offer.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ offer_id: currentOfferId })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Получаем блок здесь, где он действительно нужен
+            const negotiationBlock = document.getElementById("negotiation-block");
+
+            // Скрываем блок
+            negotiationBlock.classList.add("hidden");
+
+            // Запускаем таймер тишины 5 минут
+            lastRejectedOfferTime = Date.now();
+            currentOfferId = null;
+        } else {
+            alert("Помилка: " + (result.error || "Не вдалося відмовити"));
+        }
+
+    } catch (error) {
+        console.error("Помилка відправки:", error);
+        alert("Не вдалося зв'язатися з сервером");
+
+    } finally {
+        refuseBtn.disabled = false;
+        refuseBtn.textContent = "❌ Відмовити";
+    }
+};
+
+}

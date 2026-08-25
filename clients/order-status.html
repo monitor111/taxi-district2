@@ -46,11 +46,38 @@
             </div>
         </div>
 
-        <!-- БЛОК 3: ТОРГ (Скрыт по умолчанию) -->
-        <div class="negotiation-card hidden" id="negotiation-block">
-            <div class="nego-title">💬 Пропозиція від водія</div>
-            <div class="nego-text">
-                Водій пропонує умови. Будь ласка, перевірте повідомлення або зателефонуйте.
+                <!-- БЛОК 3: ТОРГ (Скрыт по умолчанию) -->
+        <div class="negotiation-card hidden" id="negotiation-block" style="padding: 15px; margin: 15px 0; background: #fff3cd; border-left: 4px solid #ff9800; border-radius: 8px;">
+            <!-- Заголовок (меняется через JS) -->
+            <div id="nego-title" style="font-weight: bold; color: #856404; margin-bottom: 10px; font-size: 15px;">
+                💬 Підняття ціни
+            </div>
+            
+            <!-- Предложение от водителя (скрыто, если его нет) -->
+            <div id="nego-driver-offer" class="hidden" style="color: #856404; font-size: 14px; margin-bottom: 10px;">
+                Водій пропонує підняти ціну на <strong id="nego-driver-amount">0</strong> грн
+            </div>
+            
+            <!-- Описание -->
+            <div style="color: #856404; font-size: 13px; margin-bottom: 10px;">
+                Вкажіть, на скільки підняти ціну (максимум +500 грн):
+            </div>
+            
+            <!-- Поле ввода -->
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <input type="number" id="nego-amount-input" min="10" max="500" placeholder="Наприклад, 50" 
+                       style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px;">
+                <span style="align-self: center; color: #856404; font-weight: bold;">грн</span>
+            </div>
+            
+            <!-- Кнопки -->
+            <div style="display: flex; gap: 10px;">
+                <button id="nego-raise-btn" style="flex: 1; padding: 12px; border-radius: 8px; border: none; background: #19b65b; color: white; font-size: 15px; font-weight: bold; cursor: pointer;">
+                    ✅ Підняти
+                </button>
+                <button id="nego-refuse-btn" class="hidden" style="flex: 1; padding: 12px; border-radius: 8px; border: none; background: #e74c3c; color: white; font-size: 15px; font-weight: bold; cursor: pointer;">
+                    ❌ Відмовити
+                </button>
             </div>
         </div>
 
