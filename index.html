@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="uk">
 
 <head>
@@ -6,55 +7,205 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <title>Taxi District</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: #e9edf0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .start {
+        width: 100%;
+        max-width: 430px;
+        background: #fff;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+    }
+
+    .top {
+        padding: 42px 25px 38px;
+        text-align: center;
+        background: #19b65b;
+        color: #fff;
+    }
+
+    .logo {
+        font-size: 38px;
+        font-weight: 800;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+    }
+
+    .logo span {
+        color: #eafff1;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        opacity: 0.95;
+    }
+
+    .content {
+        padding: 28px 22px 25px;
+    }
+
+    .question {
+        text-align: center;
+        margin-bottom: 18px;
+        color: #555d64;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .choices {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+    }
+
+    .choice {
+        display: flex;
+        align-items: center;
+        min-height: 82px;
+        padding: 15px 18px;
+        background: #f7f8f9;
+        border: 1px solid #e1e5e8;
+        border-radius: 16px;
+        text-decoration: none;
+        color: #20252b;
+        transition: 0.15s ease;
+    }
+
+    .choice:hover {
+        background: #f0f3f4;
+        transform: translateY(-1px);
+    }
+
+    .choice:active {
+        transform: translateY(0);
+    }
+
+    .icon {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 16px;
+        border-radius: 15px;
+        background: #e1f6e9;
+        font-size: 27px;
+        flex-shrink: 0;
+    }
+
+    .choice-name {
+        font-size: 19px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .choice-description {
+        font-size: 14px;
+        color: #777f86;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 0 20px 23px;
+        font-size: 12px;
+        color: #a0a6ab;
+    }
+
+    @media (max-width: 480px) {
         body {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            /* <-- Добавлено: выстраивает кнопки в столбик */
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            /* <-- Добавлено: расстояние между кнопками */
-            background: #f3f5f8;
-            font-family: Arial, Helvetica, sans-serif;
+            padding: 12px;
         }
 
-        a {
-            text-decoration: none;
-            background: #19b65b;
-            color: #fff;
-            padding: 18px 35px;
-            border-radius: 12px;
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            min-width: 250px;
-            /* Чтобы кнопки были одинаковой ширины */
-            transition: background 0.2s;
+        .start {
+            border-radius: 20px;
         }
 
-        a:hover {
-            background: #15a04f;
+        .top {
+            padding: 36px 20px 32px;
         }
-    </style>
+
+        .logo {
+            font-size: 34px;
+        }
+
+        .content {
+            padding: 24px 17px 22px;
+        }
+    }
+</style>
+
 </head>
 
 <body>
 
-    <a href="clients/client.html">
-        Пасажир
-    </a>
+<main class="start">
 
-    <a href="driver.html">
-        Водитель
-    </a>
+    <section class="top">
+        <div class="logo">
+            Taxi <span>District</span>
+        </div>
+
+        <div class="subtitle">
+            Таксі поруч — швидко та просто
+        </div>
+    </section>
+
+    <section class="content">
+
+        <div class="question">
+            Оберіть, хто ви
+        </div>
+
+        <div class="choices">
+
+            <a class="choice" href="clients/client.html">
+                <div class="icon">🚕</div>
+
+                <div>
+                    <div class="choice-name">Я пасажир</div>
+                    <div class="choice-description">
+                        Замовити поїздку
+                    </div>
+                </div>
+            </a>
+
+            <a class="choice" href="driver.html">
+                <div class="icon">🚗</div>
+
+                <div>
+                    <div class="choice-name">Я водій</div>
+                    <div class="choice-description">
+                        Приймати замовлення
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+    </section>
+
+    <div class="footer">
+        Taxi District
+    </div>
+
+</main>
 
 </body>
 

@@ -1,3 +1,37 @@
+/* ===========================
+   Цвета темы
+=========================== */
+
+:root {
+    --bg: #f3f5f8;
+    --surface: #ffffff;
+    --text: #222;
+    --text-secondary: #666;
+    --border: #e5e8ec;
+    --input-border: #ced4da;
+    --soft-bg: #f8f9fa;
+    --shadow: rgba(0, 0, 0, .08);
+
+    --green: #19b65b;
+    --green-dark: #15a04f;
+    --blue: #53bff5;
+    --yellow: #f4b400;
+    --red: #e74c3c;
+}
+
+/* Тёмная тема */
+
+[data-theme="dark"] {
+    --bg: #1a1d21;
+    --surface: #25282c;
+    --text: #f1f3f5;
+    --text-secondary: #aeb6bd;
+    --border: #3a3f44;
+    --input-border: #48515a;
+    --soft-bg: #2d3136;
+    --shadow: rgba(0, 0, 0, .30);
+}
+
 /* Сброс */
 
 * {
@@ -9,179 +43,111 @@
 /* Страница */
 
 body {
-
-    background: #f3f5f8;
-
+    background: var(--bg);
     font-family: Arial, Helvetica, sans-serif;
-
-    color: #222;
-
+    color: var(--text);
 }
 
 /* Верх */
 
 .top-bar {
-
     position: sticky;
-
     top: 0;
-
-    background: #ffffff;
-
+    background: var(--surface);
     padding: 18px;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
-
+    box-shadow: 0 2px 10px var(--shadow);
 }
 
 .top-bar h1 {
-
     font-size: 22px;
-
 }
 
 .top-bar p {
-
     margin-top: 4px;
-
-    color: #777;
-
+    color: var(--text-secondary);
     font-size: 14px;
-
 }
 
 /* Кнопка */
 
 .status-btn {
-
     background: #19b65b;
-
     color: #fff;
-
     border: none;
-
     border-radius: 12px;
-
     padding: 12px 18px;
-
     font-size: 15px;
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: .2s;
-
 }
 
 .status-btn:hover {
-
     opacity: .9;
-
 }
 
 /* Список */
 
 .orders {
-
     padding: 15px;
-
     display: flex;
-
     flex-direction: column;
-
     gap: 15px;
-
 }
 
 /* Карточка */
 
 .order-card {
-
     background: #53bff5;
-
     border-radius: 16px;
-
     padding: 18px;
-
     box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
-
     transition: .2s;
-
     cursor: pointer;
-
 }
 
 .order-card:hover {
-
     transform: translateY(-2px);
-
 }
 
 /* Маршрут */
 
 .route {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     font-size: 18px;
-
     font-weight: bold;
-
     color: #ffffff;
-
 }
 
 /* Нижняя строка */
 
 .info {
-
     margin-top: 18px;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     font-size: 15px;
-
     color: #eef9ff;
-
 }
 
 .price {
-
     font-size: 24px;
-
     color: #ffe66d;
-
     font-weight: bold;
-
 }
 
 /* Компьютер */
 
 @media(min-width:700px) {
-
     .orders {
-
         max-width: 700px;
-
         margin: auto;
-
     }
-
 }
 
 /* ===========================
@@ -189,193 +155,115 @@ body {
 =========================== */
 
 .order-page {
-
     max-width: 700px;
-
     margin: auto;
-
     padding: 15px;
-
 }
 
 .header-card {
-
     background: #53bff5;
-
     color: #fff;
-
     border-radius: 16px;
-
     padding: 18px;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     margin-bottom: 15px;
-
 }
 
 .status-new {
-
     background: #19b65b;
-
     padding: 8px 14px;
-
     border-radius: 20px;
-
     font-size: 14px;
-
     font-weight: bold;
-
 }
 
 .card {
-
-    background: #ffffff;
-
+    background: var(--surface);
     border-radius: 16px;
-
     padding: 18px;
-
     margin-bottom: 15px;
-
-    box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
-
+    box-shadow: 0 5px 18px var(--shadow);
 }
 
 .title {
-
-    color: #777;
-
+    color: var(--text-secondary);
     font-size: 14px;
-
     margin-bottom: 8px;
-
 }
 
 .district {
-
     font-size: 24px;
-
     font-weight: bold;
-
-    color: #222;
-
+    color: var(--text);
 }
 
 .address {
-
     margin-top: 6px;
-
-    color: #666;
-
+    color: var(--text-secondary);
     line-height: 1.5;
-
 }
 
 .row {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     padding: 10px 0;
-
-    border-bottom: 1px solid #ececec;
-
+    border-bottom: 1px solid var(--border);
 }
 
 .row:last-child {
-
     border-bottom: none;
-
 }
 
 .price-big {
-
     color: #19b65b;
-
     font-size: 30px;
-
 }
 
 .map-btn {
-
     display: block;
-
     text-align: center;
-
     background: #4285F4;
-
     color: #fff;
-
     text-decoration: none;
-
     padding: 16px;
-
     border-radius: 14px;
-
     font-weight: bold;
-
     margin-bottom: 15px;
-
 }
 
 .buttons {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 12px;
-
 }
 
 .take-btn,
 .price-btn,
 .cancel-btn {
-
     border: none;
-
     border-radius: 14px;
-
     padding: 18px;
-
     font-size: 18px;
-
     font-weight: bold;
-
     cursor: pointer;
-
 }
 
 .take-btn {
-
     background: #19b65b;
-
     color: #fff;
-
 }
 
 .price-btn {
-
     background: #f4b400;
-
     color: #fff;
-
 }
 
 .cancel-btn {
-
     background: #e74c3c;
-
     color: #fff;
-
 }
 
 /* ---------------- Клиент ---------------- */
@@ -427,16 +315,17 @@ body {
     margin-bottom: 6px;
     font-weight: 600;
     font-size: 14px;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .client-form input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #e5e8ec;
+    border: 2px solid var(--border);
     border-radius: 12px;
     font-size: 16px;
-    background: #fff;
+    background: var(--surface);
+    color: var(--text);
     outline: none;
     transition: border-color .2s;
 }
@@ -460,10 +349,10 @@ body {
     left: 0;
     right: 0;
     margin-top: 4px;
-    background: #fff;
-    border: 1px solid #e5e8ec;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    box-shadow: 0 8px 24px var(--shadow);
     z-index: 100;
     overflow: hidden;
 }
@@ -471,8 +360,9 @@ body {
 .suggestions div {
     padding: 12px 16px;
     cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border);
     font-size: 15px;
+    color: var(--text);
     transition: background .15s;
 }
 
@@ -481,7 +371,7 @@ body {
 }
 
 .suggestions div:hover {
-    background: #f5faff;
+    background: var(--soft-bg);
 }
 
 /* Кнопка расчета */
@@ -512,15 +402,15 @@ body {
     margin-top: 20px;
     padding: 18px;
     border-radius: 14px;
-    background: #fff;
-    border: 1px solid #e5e8ec;
+    background: var(--surface);
+    border: 1px solid var(--border);
     text-align: center;
     font-size: 16px;
-    color: #333;
+    color: var(--text);
 }
 
 .route-placeholder {
-    color: #999;
+    color: var(--text-secondary);
     font-size: 15px;
 }
 
@@ -533,8 +423,8 @@ body {
 }
 
 .price-card {
-    background: #fff;
-    border: 2px solid #e5e8ec;
+    background: var(--surface);
+    border: 2px solid var(--border);
     border-radius: 14px;
     padding: 16px;
     cursor: pointer;
@@ -546,23 +436,23 @@ body {
 
 .price-card:hover {
     border-color: #53bff5;
-    background: #f9fcff;
+    background: var(--soft-bg);
 }
 
 .price-card.active {
     border-color: #19b65b;
-    background: #f0fbf4;
+    background: var(--soft-bg);
 }
 
 .price-card-title {
     font-weight: 700;
     font-size: 16px;
-    color: #222;
+    color: var(--text);
 }
 
 .price-card-desc {
     font-size: 13px;
-    color: #888;
+    color: var(--text-secondary);
     margin-top: 4px;
 }
 
@@ -583,8 +473,8 @@ body {
     padding: 18px;
     border: none;
     border-radius: 14px;
-    background: #222;
-    color: #ffe66d;
+    background: var(--text);
+    color: var(--soft-bg);
     font-size: 18px;
     font-weight: 800;
     cursor: pointer;
@@ -592,7 +482,7 @@ body {
 }
 
 .call-btn:hover {
-    background: #000;
+    opacity: 0.9;
 }
 
 .hidden {
@@ -627,16 +517,16 @@ body {
 
 /* Карточка статуса */
 .status-card {
-    background: #fff;
+    background: var(--surface);
     border-radius: 16px;
     padding: 20px;
     text-align: center;
-    border: 1px solid #e5e8ec;
+    border: 1px solid var(--border);
 }
 
 .status-card.searching {
     border-color: #f4b400;
-    background: #fffdf5;
+    background: var(--surface);
 }
 
 .pulse-dot {
@@ -665,28 +555,28 @@ body {
 .status-text {
     font-size: 20px;
     font-weight: 800;
-    color: #222;
+    color: var(--text);
     margin-bottom: 5px;
 }
 
 .status-subtext {
     font-size: 14px;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 /* Карточка с информацией */
 .info-card {
-    background: #fff;
+    background: var(--surface);
     border-radius: 16px;
     padding: 18px;
-    border: 1px solid #e5e8ec;
+    border: 1px solid var(--border);
 }
 
 .info-row {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border);
     font-size: 15px;
 }
 
@@ -695,12 +585,12 @@ body {
 }
 
 .info-row .label {
-    color: #777;
+    color: var(--text-secondary);
 }
 
 .info-row .value {
     font-weight: 600;
-    color: #222;
+    color: var(--text);
     text-align: right;
 }
 
@@ -718,6 +608,11 @@ body {
     padding: 18px;
 }
 
+[data-theme="dark"] .negotiation-card {
+    background: #3d3520;
+    border-color: #f4b400;
+}
+
 .nego-title {
     font-weight: 800;
     font-size: 16px;
@@ -725,11 +620,19 @@ body {
     margin-bottom: 8px;
 }
 
+[data-theme="dark"] .nego-title {
+    color: #f1f3f5;
+}
+
 .nego-text {
     font-size: 15px;
     color: #333;
     line-height: 1.5;
     margin-bottom: 15px;
+}
+
+[data-theme="dark"] .nego-text {
+    color: #d0d0d0;
 }
 
 .nego-buttons {
@@ -764,16 +667,24 @@ body {
     border: 2px solid #d32f2f;
 }
 
+[data-theme="dark"] .btn-decline {
+    background: var(--surface);
+}
+
 .btn-decline:hover {
     background: #ffebee;
 }
 
+[data-theme="dark"] .btn-decline:hover {
+    background: #3d2828;
+}
+
 /* Карточка водителя */
 .driver-card {
-    background: #fff;
+    background: var(--surface);
     border-radius: 16px;
     padding: 18px;
-    border: 1px solid #e5e8ec;
+    border: 1px solid var(--border);
 }
 
 .driver-header {
@@ -786,7 +697,7 @@ body {
 .driver-avatar {
     width: 50px;
     height: 50px;
-    background: #e5e8ec;
+    background: var(--soft-bg);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -797,19 +708,19 @@ body {
 .driver-name {
     font-size: 18px;
     font-weight: 800;
-    color: #222;
+    color: var(--text);
 }
 
 .driver-car {
     font-size: 14px;
-    color: #555;
+    color: var(--text-secondary);
     margin-top: 2px;
 }
 
 .driver-plate {
     font-size: 13px;
-    color: #888;
-    background: #f3f5f8;
+    color: var(--text-secondary);
+    background: var(--soft-bg);
     display: inline-block;
     padding: 2px 8px;
     border-radius: 6px;
@@ -855,6 +766,10 @@ body {
     background: #ffebee;
 }
 
+[data-theme="dark"] .btn-cancel-order:hover {
+    background: #3d2828;
+}
+
 /* Поэтапное раскрытие на странице создания заказа */
 .step {
     display: flex;
@@ -866,11 +781,11 @@ body {
 .sector-select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 15px;
-    background: #fff;
-    color: #333;
+    background: var(--surface);
+    color: var(--text);
     outline: none;
     cursor: pointer;
 }
@@ -882,7 +797,7 @@ body {
 .order-address-subline {
     font-size: 13px;           
     font-weight: 600;         
-    color: #4a5568;            
+    color: var(--text-secondary);            
     margin-top: 3px;          
     line-height: 1.3;          
 }
@@ -895,8 +810,8 @@ body {
 .suggestions {
     z-index: 1000 !important;
     position: absolute;
-    background: #fff;
-    border: 1px solid #ddd;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-top: none;
     border-radius: 0 0 8px 8px;
     max-height: 200px;
@@ -904,23 +819,23 @@ body {
     width: 100%;
     left: 0;
     top: 100%;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--shadow);
 }
 
 /* Стиль для компактного селектора района */
 .integrated-sector-select {
     width: 100%;
-    margin-top: 8px; /* Небольшой отступ от основного поля ввода */
+    margin-top: 8px;
     padding: 10px 12px;
     font-size: 13px;
-    color: #4a5568;
-    background-color: #f8f9fa; /* Светло-серый фон, чтобы отличаться от белого input */
-    border: 1px solid #e2e8f0;
+    color: var(--text);
+    background-color: var(--soft-bg);
+    border: 1px solid var(--border);
     border-radius: 8px;
     outline: none;
     cursor: pointer;
-    appearance: none; /* Убирает стандартную громоздкую стрелку браузера на iOS/Android */
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 16px;
@@ -928,50 +843,95 @@ body {
 
 .integrated-sector-select:focus {
     border-color: #53bff5;
-    background-color: #fff;
+    background-color: var(--surface);
 }
 
 .hidden {
- display: none !important; 
+    display: none !important;
 }
 
-/*Для модальных окон водителя - регистрация*/
-/* Модальные окна */
+/* ===========================
+   Модальные окна регистрации
+=========================== */
+
 .modal {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(25, 35, 45, 0.65);
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 15px;
     z-index: 9999;
 }
 
 .modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface);
+    padding: 28px 25px 25px;
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.22);
 }
 
 .modal-content h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 8px;
     font-size: 24px;
+    line-height: 1.25;
+    color: var(--text);
 }
 
 .modal-content p {
-    margin: 0 0 20px 0;
-    color: #666;
+    margin: 0 0 24px;
+    color: var(--text-secondary);
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .modal-content .input-wrapper {
-    margin-bottom: 15px;
+    margin-bottom: 17px;
+}
+
+.modal-content label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.modal-content input {
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 10px 14px;
+    border: 1px solid var(--input-border);
+    border-radius: 10px;
+    background: var(--soft-bg);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-content input::placeholder {
+    color: var(--text-secondary);
+}
+
+.modal-content input:focus {
+    border-color: #19b65b;
+    box-shadow: 0 0 0 3px rgba(25, 182, 91, 0.12);
+}
+
+.modal-content .calc-btn {
+    width: 100%;
+    margin-top: 8px;
+    height: 48px;
+    border-radius: 10px;
+    font-size: 16px;
 }
 
 .modal-content .calc-btn {
@@ -979,11 +939,11 @@ body {
     margin-top: 10px;
 }
 
-   .hidden {
-       display: none !important;
-   }
+.hidden {
+    display: none !important;
+}
 
-   /* Кликабельные адреса для открытия карт */
+/* Кликабельные адреса для открытия карт */
 .clickable-address {
     cursor: pointer;
     color: #2980b9;
@@ -1014,7 +974,7 @@ body {
 }
 
 .map-modal {
-    background: white;
+    background: var(--surface);
     border-radius: 16px;
     padding: 25px;
     width: 90%;
@@ -1030,6 +990,7 @@ body {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
+    color: var(--text);
 }
 
 .map-modal-btn {
@@ -1060,8 +1021,28 @@ body {
     padding: 12px;
     border: none;
     border-radius: 10px;
-    background: #eee;
-    color: #555;
+    background: var(--soft-bg);
+    color: var(--text);
     font-size: 14px;
     cursor: pointer;
+}
+
+/* Для темной темы */
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
 }

@@ -3,6 +3,7 @@
 // ======================
 let currentOrder = null;
 let statusInterval = null;
+let currentPrice = null; // для отслеживания изменения цены
 const orderPage = document.querySelector(".order-page");
 
 if (orderPage) {
@@ -303,7 +304,7 @@ function openMap(provider) {
     document.getElementById("map-modal").classList.add("hidden");
 }
 
-// === ОПРОС СТАТУСА ЗАКАЗА (для редиректа при отмене клиентом) ===
+// === ОПРОС СТАТУСА ЗАКАЗА ===
 async function checkOrderStatus(orderId) {
     try {
         const response = await fetch(`/api/get_order_status.php?id=${orderId}`);
@@ -313,22 +314,43 @@ async function checkOrderStatus(orderId) {
 
         const order = data.order;
 
+        // === ПРОВЕРКА ИЗМЕНЕНИЯ ЦЕНЫ ===
+        const newPrice = Math.round(order.offered_price);
+        if (currentPrice !== null && newPrice !== currentPrice) {
+            // Цена изменилась — обновляем на странице
+            document.getElementById("order-price").textContent = `${newPrice} грн`;
+            currentPrice = newPrice;
+            
+            // Уведомление водителю (только если заказ ещё searching)
+            if (order.status === 'searching') {
+                const statusEl = document.getElementById("order-status");
+                statusEl.textContent = `💰 Ціна піднята до ${newPrice} грн!`;
+                statusEl.style.background = "#ff9800";
+                statusEl.style.color = "#fff";
+            }
+        }
+        
+        // Сохраняем текущую цену при первом запуске
+        if (currentPrice === null) {
+            currentPrice = newPrice;
+        }
+
         // Если клиент отменил заказ
         if (order.status === 'cancelled') {
-    // Останавливаем опрос, чтобы alert не показывался повторно
-    clearInterval(statusInterval);
-    
-    const statusEl = document.getElementById("order-status");
-    statusEl.textContent = "❌ Клієнт скасував замовлення";
-    statusEl.style.background = "#e74c3c";
-    statusEl.style.color = "#fff";
+            // Останавливаем опрос, чтобы alert не показывался повторно
+            clearInterval(statusInterval);
+            
+            const statusEl = document.getElementById("order-status");
+            statusEl.textContent = "❌ Клієнт скасував замовлення";
+            statusEl.style.background = "#e74c3c";
+            statusEl.style.color = "#fff";
 
-    alert("Клієнт скасував замовлення");
-    
-    setTimeout(() => {
-        window.location.href = "driver.html";
-    }, 1000);
-}
+            alert("Клієнт скасував замовлення");
+            
+            setTimeout(() => {
+                window.location.href = "driver.html";
+            }, 1000);
+        }
     } catch (error) {
         console.error("Помилка перевірки статусу:", error);
     }

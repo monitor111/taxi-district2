@@ -151,6 +151,12 @@ async function checkPriceOffers() {
         const offers = data.offers;
         const negotiationBlock = document.getElementById("negotiation-block");
 
+        // === ДОБАВИТЬ ЭТУ ПРОВЕРКУ ===
+        if (negotiationFinished) {
+            negotiationBlock.classList.add("hidden");
+            return;
+        }
+
         // Если нет предложений — скрываем блок
         if (offers.length === 0) {
             negotiationBlock.classList.add("hidden");
@@ -241,4 +247,98 @@ refuseBtn.onclick = async () => {
     }
 };
 
+}
+
+// === ОБРАБОТЧИКИ КНОПОК ТОРГА (вне функции, привязываются один раз при загрузке) ===
+const refuseBtn = document.getElementById("nego-refuse-btn");
+const agreeBtn = document.getElementById("nego-agree-btn");
+
+let negotiationFinished = false; // Флаг: торг завершен, новые предложения не показываем
+
+// --- Обработчик кнопки "Відмовити" (ваш существующий код, чуть причесанный) ---
+if (refuseBtn) {
+    refuseBtn.onclick = async () => {
+        if (!confirm("Відмовити водію? Нові пропозиції не з'являтимуться 5 хвилин.")) return;
+
+        refuseBtn.disabled = true;
+        refuseBtn.textContent = "Обробка...";
+
+        try {
+            const response = await fetch("/api/reject_offer.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ offer_id: currentOfferId })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const negotiationBlock = document.getElementById("negotiation-block");
+                negotiationBlock.classList.add("hidden");
+                lastRejectedOfferTime = Date.now();
+                currentOfferId = null;
+            } else {
+                alert("Помилка: " + (result.error || "Не вдалося відмовити"));
+            }
+        } catch (error) {
+            console.error("Помилка відправки:", error);
+            alert("Не вдалося зв'язатися з сервером");
+        } finally {
+            refuseBtn.disabled = false;
+            refuseBtn.textContent = "❌ Відмовити";
+        }
+    };
+}
+
+// --- Обработчик кнопки "Погодитися" (НОВЫЙ) ---
+if (agreeBtn) {
+    agreeBtn.onclick = async () => {
+        const amountInput = document.getElementById("nego-amount-input");
+        const amount = parseInt(amountInput.value);
+
+        if (!amount || amount <= 0) {
+            alert("Будь ласка, вкажіть коректну суму підняття ціни.");
+            return;
+        }
+
+        agreeBtn.disabled = true;
+        agreeBtn.textContent = "Обробка...";
+
+        try {
+            // Формируем данные: если есть предложение водителя, отправляем offer_id.
+            // Если клиент поднял цену сам, отправляем order_id и amount.
+            const payload = currentOfferId 
+                ? { offer_id: currentOfferId } 
+                : { order_id: orderId, amount: amount };
+
+            const response = await fetch("/api/agree_price_offer.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                const negotiationBlock = document.getElementById("negotiation-block");
+                negotiationBlock.classList.add("hidden");
+                
+                // Устанавливаем флаг, чтобы checkPriceOffers больше не показывал этот блок
+                negotiationFinished = true; 
+                
+                // Принудительно обновляем статус, чтобы клиент сразу увидел новую цену в шапке
+                checkStatus(); 
+                
+                alert("Ціну успішно оновлено! Очікуйте, поки водій підтвердить замовлення.");
+            } else {
+                alert("Помилка: " + (result.error || "Не вдалося погодити ціну"));
+            }
+        } catch (error) {
+            console.error("Помилка відправки:", error);
+            alert("Не вдалося зв'язатися з сервером");
+        } finally {
+            agreeBtn.disabled = false;
+            agreeBtn.textContent = "✅ Погодитися";
+        }
+    };
 }
